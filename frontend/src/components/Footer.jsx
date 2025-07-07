@@ -2,8 +2,8 @@ const Footer = () => {
 	return (
 		<footer
 			className="bg-secondary-900 text-white py-8 md:py-10"
-			// data-aos="fade-up"
-			// data-aos-duration="1200"
+			data-aos="fade-up"
+			data-aos-duration="1200"
 		>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -201,15 +201,12 @@ const Footer = () => {
 
 				<div
 					className="border-t border-secondary-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
-					data-aos="fade-up"
-					data-aos-duration="1200"
-					data-aos-delay="100"
 				>
 					<p
 						className="text-secondary-400 text-sm mb-4 md:mb-0"
 					>
 						&copy;
-						2024
+						2025
 						Rancangin
 						Digital
 						Indonesia.

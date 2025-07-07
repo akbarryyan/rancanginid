@@ -132,11 +132,10 @@ const Header = () => {
 												d="M19 9l-7 7-7-7"
 											/>
 										</svg>
-									</button>
-
+									</button>{" "}
 									{/* Desktop Dropdown Menu */}
-									<div className="absolute left-0 mt-2 w-56 bg-white dark:bg-secondary-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-										<div className="py-2">
+									<div className="absolute left-0 mt-2 w-56 bg-white dark:bg-secondary-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 scrollbar-hide">
+										<div className="py-2 max-h-64 overflow-y-auto scrollbar-hide">
 											<a
 												href="#services"
 												onClick={(
@@ -380,11 +379,10 @@ const Header = () => {
 							</button>
 						</div>
 					</div>
-				</div>
-
+				</div>{" "}
 				{/* Mobile Menu - Responsive dropdown */}
 				<div
-					className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+					className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden scrollbar-hide ${
 						isMobileMenuOpen
 							? "max-h-screen opacity-100"
 							: "max-h-0 opacity-0"
@@ -450,11 +448,10 @@ const Header = () => {
 												d="M19 9l-7 7-7-7"
 											/>
 										</svg>
-									</button>
-
+									</button>{" "}
 									{/* Mobile Services Submenu */}
 									<div
-										className={`ml-4 mt-2 space-y-2 transition-all duration-300 overflow-hidden ${
+										className={`ml-4 mt-2 space-y-2 transition-all duration-300 overflow-hidden scrollbar-hide ${
 											isServicesOpen
 												? "max-h-96 opacity-100"
 												: "max-h-0 opacity-0"

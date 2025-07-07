@@ -1,13 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 
-// Create context outside component to avoid Fast Refresh issues
 const ThemeContext = createContext();
 
 function ThemeProvider({ children }) {
 	const [isDark, setIsDark] = useState(false);
 
+	// Initialize theme on mount
 	useEffect(() => {
-		// Check for saved theme preference or use system preference
 		const savedTheme =
 			localStorage.getItem(
 				"theme"
@@ -17,37 +16,42 @@ function ThemeProvider({ children }) {
 				"(prefers-color-scheme: dark)"
 			).matches;
 
-		if (
+		const shouldBeDark =
 			savedTheme ===
 				"dark" ||
 			(!savedTheme &&
-				prefersDark)
-		) {
-			setIsDark(
-				true
-			);
+				prefersDark);
+
+		setIsDark(shouldBeDark);
+
+		if (shouldBeDark) {
 			document.documentElement.classList.add(
 				"dark"
 			);
 		} else {
-			setIsDark(
-				false
-			);
 			document.documentElement.classList.remove(
 				"dark"
 			);
 		}
 	}, []);
-
 	const toggleTheme = () => {
-		setIsDark(!isDark);
-		if (!isDark) {
+		console.log(
+			"Toggle theme called, current isDark:",
+			isDark
+		);
+		const newIsDark = !isDark;
+		setIsDark(newIsDark);
+
+		if (newIsDark) {
 			document.documentElement.classList.add(
 				"dark"
 			);
 			localStorage.setItem(
 				"theme",
 				"dark"
+			);
+			console.log(
+				"Switched to dark mode"
 			);
 		} else {
 			document.documentElement.classList.remove(
@@ -57,7 +61,15 @@ function ThemeProvider({ children }) {
 				"theme",
 				"light"
 			);
+			console.log(
+				"Switched to light mode"
+			);
 		}
+
+		console.log(
+			"HTML classList after toggle:",
+			document.documentElement.classList.toString()
+		);
 	};
 
 	return (

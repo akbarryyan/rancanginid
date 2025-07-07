@@ -2,7 +2,7 @@ const Hero = () => {
 	return (
 		<section
 			id="home"
-			className="pt-32 pb-20 md:pt-40 md:pb-14 relative overflow-hidden"
+			className="pt-32 pb-20 md:pt-40 md:pb-14 relative"
 		>
 			<div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-white dark:from-secondary-900 dark:to-secondary-800 -z-10"></div>
 

@@ -16,10 +16,9 @@ const MobileMenu = () => {
 		closeMenu();
 		setIsServicesOpen(false);
 	};
-
 	return (
 		<div
-			className={`fixed inset-0 z-50 bg-white dark:bg-secondary-900 transform transition-transform duration-300 ease-in-out ${
+			className={`fixed inset-0 z-50 bg-white dark:bg-secondary-900 transform transition-transform duration-300 ease-in-out overflow-y-auto scrollbar-hide ${
 				isOpen
 					? "translate-x-0"
 					: "translate-x-full"

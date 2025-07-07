@@ -1,18 +1,26 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Prevent horizontal scroll */
 html,
 body {
 	overflow-x: hidden;
 	max-width: 100vw;
-	background-color: #0f172a; /* Set a dark background to prevent white flash */
+	transition: background-color 0.3s ease,
+		color 0.3s ease;
 }
 
-#root {
-	min-height: 100vh;
-	background-color: #0f172a; /* Ensure root element has dark background */
+/* Light mode background */
+html {
+	background-color: #ffffff;
 }
 
+/* Dark mode background */
+html.dark {
+	background-color: #0f172a;
+}
+
+/* Smooth theme transitions for all elements */
 * {
 	box-sizing: border-box;
 }
@@ -92,10 +100,51 @@ body {
 body {
 	margin: 0;
 	padding: 0;
+	overflow-x: hidden;
 }
 
 /* Prevent any margin collapse on the main wrapper */
 #root {
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
+	overflow-x: hidden;
+	transition: background-color 0.3s ease;
+	background-color: inherit;
+}
+
+/* Utility untuk menghilangkan scrollbar pada konten tertentu */
+.scrollbar-hide {
+	/* IE and Edge */
+	-ms-overflow-style: none;
+	/* Firefox */
+	scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+	/* Chrome, Safari and Opera */
+	display: none;
+}
+
+/* Utility untuk scrollbar thin */
+.scrollbar-thin {
+	scrollbar-width: thin;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+	background: #cbd5e1;
+	border-radius: 2px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+	background: #475569;
 }

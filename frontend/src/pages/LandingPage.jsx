@@ -11,7 +11,6 @@ import Blog from "../components/Blog";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import BackToTop from "../components/BackToTop";
-import ThemeProvider from "../context/ThemeContext";
 
 function LandingPage() {
 	useEffect(() => {
@@ -24,22 +23,20 @@ function LandingPage() {
 		});
 	}, []);
 	return (
-		<ThemeProvider>
-			<div className="font-sans antialiased transition-theme min-h-screen bg-white text-secondary-800 dark:bg-secondary-900 dark:text-secondary-100 flex flex-col">
-				<MobileMenu />
-				<Header />
-				<main className="flex-1">
-					<Hero />
-					<About />
-					<Services />
-					<Portfolio />
-					<Blog />
-					<Contact />
-				</main>
-				<Footer />
-				<BackToTop />
-			</div>
-		</ThemeProvider>
+		<div className="font-sans antialiased transition-theme bg-white text-secondary-800 dark:bg-secondary-900 dark:text-secondary-100">
+			<MobileMenu />
+			<Header />
+			<main>
+				<Hero />
+				<About />
+				<Services />
+				<Portfolio />
+				<Blog />
+				<Contact />
+			</main>
+			<Footer />
+			<BackToTop />
+		</div>
 	);
 }
 
