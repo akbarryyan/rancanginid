@@ -110,12 +110,13 @@ const About = () => {
 			id="about"
 			className="py-20 md:py-32 bg-white dark:bg-secondary-900"
 		>
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 					<div className="order-2 md:order-1">
 						<div
 							className="relative"
 							data-aos="fade-right"
+							data-aos-offset="200"
 							data-aos-duration="1200"
 						>
 							<div className="w-full h-96 bg-gradient-to-br from-primary-100 to-primary-50 dark:from-primary-900/30 dark:to-primary-800/20 rounded-2xl overflow-hidden">
@@ -127,13 +128,14 @@ const About = () => {
 							</div>
 
 							{/* Stats Overlay */}
-							<div className="absolute -bottom-8 -right-8 bg-white dark:bg-secondary-800 p-6 rounded-2xl shadow-xl">
+							<div className="absolute -bottom-8 right-4 bg-white dark:bg-secondary-800 p-6 rounded-2xl shadow-xl">
 								<div className="grid grid-cols-3 gap-4 text-center">
 									<div>
 										<div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
 											{
 												counters.projects
 											}
+
 											+
 										</div>
 										<div className="text-sm text-secondary-600 dark:text-secondary-400">
@@ -145,6 +147,7 @@ const About = () => {
 											{
 												counters.clients
 											}
+
 											+
 										</div>
 										<div className="text-sm text-secondary-600 dark:text-secondary-400">
@@ -156,6 +159,7 @@ const About = () => {
 											{
 												counters.experience
 											}
+
 											+
 										</div>
 										<div className="text-sm text-secondary-600 dark:text-secondary-400">

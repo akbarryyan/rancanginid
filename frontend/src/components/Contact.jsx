@@ -141,7 +141,7 @@ const Contact = () => {
 			id="contact"
 			className="py-20 md:py-32 bg-white dark:bg-secondary-900"
 		>
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 				<div
 					className="text-center mb-16"
 					data-aos="fade-up"

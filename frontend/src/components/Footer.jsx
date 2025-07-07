@@ -1,11 +1,11 @@
 const Footer = () => {
 	return (
 		<footer
-			className="bg-secondary-900 text-white py-6 md:py-8"
-			data-aos="fade-up"
-			data-aos-duration="1200"
+			className="bg-secondary-900 text-white py-8 md:py-10"
+			// data-aos="fade-up"
+			// data-aos-duration="1200"
 		>
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 					{/* Company Info */}
 					<div>
@@ -207,9 +207,6 @@ const Footer = () => {
 				>
 					<p
 						className="text-secondary-400 text-sm mb-4 md:mb-0"
-						data-aos="fade-up"
-						data-aos-duration="1200"
-						data-aos-delay="200"
 					>
 						&copy;
 						2024
@@ -222,9 +219,6 @@ const Footer = () => {
 					</p>
 					<div
 						className="flex space-x-6"
-						data-aos="fade-up"
-						data-aos-duration="1200"
-						data-aos-delay="300"
 					>
 						<FooterLink
 							href="#"

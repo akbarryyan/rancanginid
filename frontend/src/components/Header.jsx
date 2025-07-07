@@ -3,11 +3,15 @@ import { useTheme } from "../hooks/useTheme";
 
 const Header = () => {
 	const { isDark, toggleTheme } = useTheme();
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [isServicesOpen, setIsServicesOpen] = useState(false);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] =
+		useState(false);
+	const [isServicesOpen, setIsServicesOpen] =
+		useState(false);
 
 	const toggleMobileMenu = () => {
-		setIsMobileMenuOpen(!isMobileMenuOpen);
+		setIsMobileMenuOpen(
+			!isMobileMenuOpen
+		);
 		setIsServicesOpen(false);
 	};
 
@@ -17,37 +21,61 @@ const Header = () => {
 	};
 
 	const toggleServices = () => {
-		setIsServicesOpen(!isServicesOpen);
+		setIsServicesOpen(
+			!isServicesOpen
+		);
 	};
 
 	const handleLinkClick = (href) => {
 		closeMobileMenu();
-		
-		if (href && href.startsWith('#')) {
-			const targetId = href.substring(1);
-			const target = document.getElementById(targetId);
-			if (target) {
-				setTimeout(() => {
-					target.scrollIntoView({
-						behavior: 'smooth',
-						block: 'start'
-					});
-				}, 150);
+
+		if (
+			href &&
+			href.startsWith(
+				"#"
+			)
+		) {
+			const targetId =
+				href.substring(
+					1
+				);
+			const target =
+				document.getElementById(
+					targetId
+				);
+			if (
+				target
+			) {
+				setTimeout(
+					() => {
+						target.scrollIntoView(
+							{
+								behavior: "smooth",
+								block: "start",
+							}
+						);
+					},
+					150
+				);
 			}
 		}
 	};
 
 	return (
 		<>
-			<header className="fixed top-0 left-0 right-0 z-40 bg-white bg-opacity-90 backdrop-blur-sm dark:bg-secondary-900 dark:bg-opacity-90 shadow-sm transition-theme">
-				<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<header className="fixed top-0 left-0 w-full z-40 bg-white bg-opacity-90 backdrop-blur-sm dark:bg-secondary-900 dark:bg-opacity-90 shadow-sm transition-theme">
+				<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 					<div className="flex justify-between items-center h-16 md:h-20">
 						<a
 							href="#"
 							className="text-xl md:text-2xl font-bold text-primary-600 dark:text-primary-400 font-poppins"
-							onClick={(e) => {
+							onClick={(
+								e
+							) => {
 								e.preventDefault();
-								handleLinkClick('#home');
+								handleLinkClick(
+									"#home"
+								);
 							}}
 						>
 							Rancangin
@@ -59,9 +87,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#home"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#home');
+											handleLinkClick(
+												"#home"
+											);
 										}}
 										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -71,9 +103,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#about"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#about');
+											handleLinkClick(
+												"#about"
+											);
 										}}
 										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -103,49 +139,74 @@ const Header = () => {
 										<div className="py-2">
 											<a
 												href="#services"
-												onClick={(e) => {
+												onClick={(
+													e
+												) => {
 													e.preventDefault();
-													handleLinkClick('#services');
+													handleLinkClick(
+														"#services"
+													);
 												}}
 												className="block px-4 py-2 text-sm text-secondary-700 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400"
 											>
-												Web Development
+												Web
+												Development
 											</a>
 											<a
 												href="#services"
-												onClick={(e) => {
+												onClick={(
+													e
+												) => {
 													e.preventDefault();
-													handleLinkClick('#services');
+													handleLinkClick(
+														"#services"
+													);
 												}}
 												className="block px-4 py-2 text-sm text-secondary-700 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400"
 											>
-												Mobile App Development
+												Mobile
+												App
+												Development
 											</a>
 											<a
 												href="#services"
-												onClick={(e) => {
+												onClick={(
+													e
+												) => {
 													e.preventDefault();
-													handleLinkClick('#services');
+													handleLinkClick(
+														"#services"
+													);
 												}}
 												className="block px-4 py-2 text-sm text-secondary-700 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400"
 											>
-												UI/UX Design
+												UI/UX
+												Design
 											</a>
 											<a
 												href="#services"
-												onClick={(e) => {
+												onClick={(
+													e
+												) => {
 													e.preventDefault();
-													handleLinkClick('#services');
+													handleLinkClick(
+														"#services"
+													);
 												}}
 												className="block px-4 py-2 text-sm text-secondary-700 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400"
 											>
-												Digital Marketing
+												Digital
+												Marketing
 											</a>
 											<a
 												href="#services"
-												onClick={(e) => {
+												onClick={(
+													e
+												) => {
 													e.preventDefault();
-													handleLinkClick('#services');
+													handleLinkClick(
+														"#services"
+													);
 												}}
 												className="block px-4 py-2 text-sm text-secondary-700 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400"
 											>
@@ -153,13 +214,18 @@ const Header = () => {
 											</a>
 											<a
 												href="#services"
-												onClick={(e) => {
+												onClick={(
+													e
+												) => {
 													e.preventDefault();
-													handleLinkClick('#services');
+													handleLinkClick(
+														"#services"
+													);
 												}}
 												className="block px-4 py-2 text-sm text-secondary-700 dark:text-secondary-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400"
 											>
-												Cloud Solutions
+												Cloud
+												Solutions
 											</a>
 										</div>
 									</div>
@@ -167,9 +233,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#portfolio"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#portfolio');
+											handleLinkClick(
+												"#portfolio"
+											);
 										}}
 										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -179,9 +249,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#blog"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#blog');
+											handleLinkClick(
+												"#blog"
+											);
 										}}
 										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -191,9 +265,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#contact"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#contact');
+											handleLinkClick(
+												"#contact"
+											);
 										}}
 										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -206,7 +284,9 @@ const Header = () => {
 						<div className="flex items-center space-x-4">
 							{/* Theme Toggle */}
 							<button
-								onClick={toggleTheme}
+								onClick={
+									toggleTheme
+								}
 								className="p-2 rounded-full hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
 							>
 								{isDark ? (
@@ -245,18 +325,25 @@ const Header = () => {
 							{/* Contact Button - Hidden on small screens */}
 							<a
 								href="#contact"
-								onClick={(e) => {
+								onClick={(
+									e
+								) => {
 									e.preventDefault();
-									handleLinkClick('#contact');
+									handleLinkClick(
+										"#contact"
+									);
 								}}
 								className="hidden sm:block px-4 py-2 rounded-full bg-primary-600 hover:bg-primary-700 text-white transition-colors"
 							>
-								Mulai Konsultasi
+								Mulai
+								Konsultasi
 							</a>
 
 							{/* Mobile Menu Button */}
 							<button
-								onClick={toggleMobileMenu}
+								onClick={
+									toggleMobileMenu
+								}
 								className="lg:hidden p-2 rounded-full hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors"
 							>
 								{isMobileMenuOpen ? (
@@ -298,7 +385,9 @@ const Header = () => {
 				{/* Mobile Menu - Responsive dropdown */}
 				<div
 					className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-						isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+						isMobileMenuOpen
+							? "max-h-screen opacity-100"
+							: "max-h-0 opacity-0"
 					}`}
 				>
 					<div className="px-4 py-6 bg-white dark:bg-secondary-900 border-t border-secondary-200 dark:border-secondary-800">
@@ -307,9 +396,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#home"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#home');
+											handleLinkClick(
+												"#home"
+											);
 										}}
 										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -319,9 +412,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#about"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#about');
+											handleLinkClick(
+												"#about"
+											);
 										}}
 										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -330,13 +427,17 @@ const Header = () => {
 								</li>
 								<li>
 									<button
-										onClick={toggleServices}
+										onClick={
+											toggleServices
+										}
 										className="flex justify-between items-center w-full py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-left"
 									>
 										Layanan
 										<svg
 											className={`h-5 w-5 transform transition-transform ${
-												isServicesOpen ? 'rotate-180' : ''
+												isServicesOpen
+													? "rotate-180"
+													: ""
 											}`}
 											fill="none"
 											stroke="currentColor"
@@ -350,58 +451,85 @@ const Header = () => {
 											/>
 										</svg>
 									</button>
-									
+
 									{/* Mobile Services Submenu */}
 									<div
 										className={`ml-4 mt-2 space-y-2 transition-all duration-300 overflow-hidden ${
-											isServicesOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+											isServicesOpen
+												? "max-h-96 opacity-100"
+												: "max-h-0 opacity-0"
 										}`}
 									>
 										<a
 											href="#services"
-											onClick={(e) => {
+											onClick={(
+												e
+											) => {
 												e.preventDefault();
-												handleLinkClick('#services');
+												handleLinkClick(
+													"#services"
+												);
 											}}
 											className="block py-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 										>
-											Web Development
+											Web
+											Development
 										</a>
 										<a
 											href="#services"
-											onClick={(e) => {
+											onClick={(
+												e
+											) => {
 												e.preventDefault();
-												handleLinkClick('#services');
+												handleLinkClick(
+													"#services"
+												);
 											}}
 											className="block py-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 										>
-											Mobile App Development
+											Mobile
+											App
+											Development
 										</a>
 										<a
 											href="#services"
-											onClick={(e) => {
+											onClick={(
+												e
+											) => {
 												e.preventDefault();
-												handleLinkClick('#services');
+												handleLinkClick(
+													"#services"
+												);
 											}}
 											className="block py-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 										>
-											UI/UX Design
+											UI/UX
+											Design
 										</a>
 										<a
 											href="#services"
-											onClick={(e) => {
+											onClick={(
+												e
+											) => {
 												e.preventDefault();
-												handleLinkClick('#services');
+												handleLinkClick(
+													"#services"
+												);
 											}}
 											className="block py-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 										>
-											Digital Marketing
+											Digital
+											Marketing
 										</a>
 										<a
 											href="#services"
-											onClick={(e) => {
+											onClick={(
+												e
+											) => {
 												e.preventDefault();
-												handleLinkClick('#services');
+												handleLinkClick(
+													"#services"
+												);
 											}}
 											className="block py-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 										>
@@ -409,22 +537,31 @@ const Header = () => {
 										</a>
 										<a
 											href="#services"
-											onClick={(e) => {
+											onClick={(
+												e
+											) => {
 												e.preventDefault();
-												handleLinkClick('#services');
+												handleLinkClick(
+													"#services"
+												);
 											}}
 											className="block py-2 text-secondary-600 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 										>
-											Cloud Solutions
+											Cloud
+											Solutions
 										</a>
 									</div>
 								</li>
 								<li>
 									<a
 										href="#portfolio"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#portfolio');
+											handleLinkClick(
+												"#portfolio"
+											);
 										}}
 										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -434,9 +571,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#blog"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#blog');
+											handleLinkClick(
+												"#blog"
+											);
 										}}
 										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -446,9 +587,13 @@ const Header = () => {
 								<li>
 									<a
 										href="#contact"
-										onClick={(e) => {
+										onClick={(
+											e
+										) => {
 											e.preventDefault();
-											handleLinkClick('#contact');
+											handleLinkClick(
+												"#contact"
+											);
 										}}
 										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
@@ -461,13 +606,18 @@ const Header = () => {
 							<div className="mt-6 pt-6 border-t border-secondary-200 dark:border-secondary-800">
 								<a
 									href="#contact"
-									onClick={(e) => {
+									onClick={(
+										e
+									) => {
 										e.preventDefault();
-										handleLinkClick('#contact');
+										handleLinkClick(
+											"#contact"
+										);
 									}}
 									className="block w-full text-center py-3 px-6 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold transition-colors"
 								>
-									Mulai Konsultasi
+									Mulai
+									Konsultasi
 								</a>
 							</div>
 						</nav>
@@ -478,9 +628,13 @@ const Header = () => {
 			{/* Mobile Menu Backdrop */}
 			<div
 				className={`fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden transition-opacity duration-300 ${
-					isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+					isMobileMenuOpen
+						? "opacity-100 visible"
+						: "opacity-0 invisible"
 				}`}
-				onClick={closeMobileMenu}
+				onClick={
+					closeMobileMenu
+				}
 			></div>
 		</>
 	);

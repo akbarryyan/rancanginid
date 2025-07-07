@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* Prevent horizontal scroll */
+html,
+body {
+	overflow-x: hidden;
+	max-width: 100vw;
+	background-color: #0f172a; /* Set a dark background to prevent white flash */
+}
+
+#root {
+	min-height: 100vh;
+	background-color: #0f172a; /* Ensure root element has dark background */
+}
+
+* {
+	box-sizing: border-box;
+}
+
 /* Define custom CSS variables for colors */
 @theme {
 	--color-primary-50: #f0f9ff;
@@ -71,21 +88,14 @@
 		box-shadow 0.3s ease;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+/* Ensure footer is truly at the bottom without extra space */
+body {
+	margin: 0;
+	padding: 0;
 }
 
-::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #cbd5e1;
-	border-radius: 4px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-	background: #475569;
+/* Prevent any margin collapse on the main wrapper */
+#root {
+	display: flex;
+	flex-direction: column;
 }

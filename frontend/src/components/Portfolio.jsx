@@ -120,7 +120,7 @@ const Portfolio = () => {
 			id="portfolio"
 			className="py-20 md:py-32 bg-white dark:bg-secondary-900"
 		>
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 				<div className="max-w-3xl mx-auto text-center mb-16">
 					<h2
 						className="text-3xl md:text-4xl font-bold mb-6 text-secondary-900 dark:text-white font-poppins"
