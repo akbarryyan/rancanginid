@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 
 const Sidebar = ({ isOpen, onToggle }) => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [showLogoutModal, setShowLogoutModal] =
+		useState(false);
 
 	// Use prop or internal state for sidebar visibility
 	const isSidebarOpen =
@@ -17,6 +19,38 @@ const Sidebar = ({ isOpen, onToggle }) => {
 			setSidebarOpen(
 				!sidebarOpen
 			));
+
+	// Handle Escape key for logout modal
+	useEffect(() => {
+		const handleKeyDown = (
+			event
+		) => {
+			if (
+				event.key ===
+				"Escape"
+			) {
+				setShowLogoutModal(
+					false
+				);
+			}
+		};
+
+		// Add event listener when modal is open
+		if (showLogoutModal) {
+			document.addEventListener(
+				"keydown",
+				handleKeyDown
+			);
+		}
+
+		// Cleanup event listener
+		return () => {
+			document.removeEventListener(
+				"keydown",
+				handleKeyDown
+			);
+		};
+	}, [showLogoutModal]);
 
 	// Get active menu from current path
 	const getActiveMenu = () => {
@@ -301,7 +335,6 @@ const Sidebar = ({ isOpen, onToggle }) => {
 			);
 		}
 	};
-
 	const handleLogout = () => {
 		localStorage.removeItem(
 			"adminToken"
@@ -310,6 +343,11 @@ const Sidebar = ({ isOpen, onToggle }) => {
 			"adminUser"
 		);
 		navigate("/back/login");
+	};
+
+	const confirmLogout = () => {
+		setShowLogoutModal(false);
+		handleLogout();
 	};
 	return (
 		<>
@@ -447,10 +485,12 @@ const Sidebar = ({ isOpen, onToggle }) => {
 									</p>
 								</div>
 							</div>
-						</div>
+						</div>{" "}
 						<button
-							onClick={
-								handleLogout
+							onClick={() =>
+								setShowLogoutModal(
+									true
+								)
 							}
 							className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-600 rounded-xl hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 transition-all duration-200 hover:shadow-sm"
 						>
@@ -472,10 +512,141 @@ const Sidebar = ({ isOpen, onToggle }) => {
 							<span>
 								Logout
 							</span>
-						</button>
+						</button>{" "}
 					</div>{" "}
 				</div>
 			</div>
+			{/* Modal Konfirmasi Logout */}
+			{showLogoutModal && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+					<div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full animate-in zoom-in-95 duration-200">
+						{/* Header Modal */}
+						<div className="flex items-center space-x-4 px-6 pt-6 pb-4">
+							<div className="flex-shrink-0">
+								<div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
+									<svg
+										className="w-6 h-6 text-red-600 dark:text-red-400"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={
+												2
+											}
+											d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+										/>
+									</svg>
+								</div>
+							</div>
+							<div className="flex-1 min-w-0">
+								<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+									Konfirmasi
+									Logout
+								</h3>
+								<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+									Apakah
+									Anda
+									yakin
+									ingin
+									keluar
+									dari
+									sistem?
+								</p>
+							</div>
+						</div>
+
+						{/* Content */}
+						<div className="px-6 pb-4">
+							<div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+								<div className="flex items-start space-x-3">
+									<svg
+										className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={
+												2
+											}
+											d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+										/>
+									</svg>
+									<div className="text-sm">
+										<p className="text-yellow-800 dark:text-yellow-200 font-medium">
+											Informasi
+											Penting
+										</p>
+										<p className="text-yellow-700 dark:text-yellow-300 mt-1">
+											Pastikan
+											semua
+											pekerjaan
+											Anda
+											telah
+											disimpan
+											sebelum
+											logout.
+											Anda
+											akan
+											diarahkan
+											ke
+											halaman
+											login
+											setelah
+											logout.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						{/* Footer */}
+						<div className="flex items-center justify-end space-x-3 px-6 py-4 bg-gray-50 dark:bg-gray-700/50 rounded-b-lg">
+							<button
+								onClick={() =>
+									setShowLogoutModal(
+										false
+									)
+								}
+								className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+							>
+								Batal
+							</button>
+							<button
+								onClick={
+									confirmLogout
+								}
+								className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors flex items-center space-x-2"
+							>
+								<svg
+									className="w-4 h-4"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={
+											2
+										}
+										d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+									/>
+								</svg>
+								<span>
+									Ya,
+									Logout
+								</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 		</>
 	);
 };
