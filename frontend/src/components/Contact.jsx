@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false); // New state for success
 
   const [formData, setFormData] = useState({
     name: "",
@@ -42,30 +46,15 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // timeout 10 detik
+    setIsSuccess(false); // reset success dulu
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/contact`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-          signal: controller.signal,
-        }
-      );
+      console.log("===> SUBMIT START");
 
-      clearTimeout(timeoutId);
+      await axios.post(`${API_URL}/api/contact`, formData, { timeout: 8000 });
 
-      if (!response.ok) {
-        const result = await response.json().catch(() => ({}));
-        throw new Error(result.error || "Gagal kirim pesan.");
-      }
-
+      console.log("===> SUBMIT SUCCESS");
       toast.success("Pesan berhasil dikirim!");
-
       setFormData({
         name: "",
         email: "",
@@ -74,15 +63,18 @@ const Contact = () => {
         service: "",
         message: "",
       });
-    } catch (err) {
-      if (err.name === "AbortError") {
-        toast.error("Timeout: Server tidak merespon.");
-      } else {
-        toast.error(err.message || "Terjadi kesalahan.");
-      }
-      console.error("ERROR SUBMIT:", err);
+
+      setIsSuccess(true); // trigger tombol berubah
+    } catch (error) {
+      console.error("===> SUBMIT ERROR:", error);
+      toast.error("Gagal mengirim pesan. Silakan coba lagi.");
     } finally {
-      setIsLoading(false);
+      console.log("===> SUBMIT FINALLY");
+      // Delay biar ada efek "Berhasil Mengirim"
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsSuccess(false);
+      }, 2000);
     }
   };
 
@@ -152,7 +144,7 @@ const Contact = () => {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
-            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            d="M9 12h6m-6 4h6m2 0H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
           />
         </svg>
       ),
@@ -304,7 +296,7 @@ const Contact = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      d="M9 12h6m-6 4h6m2 0H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
                 </div>
@@ -404,7 +396,8 @@ const Contact = () => {
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white transition-colors"
+                    className="w-full px-4 pyഗ
+                    py-3 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white transition-colors"
                   >
                     <option value="">Pilih layanan</option>
                     {services.map((svc) => (
@@ -429,7 +422,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     rows="5"
-                    className="w-full px-4 py-3 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white transition-colors resize-none placeholder:text-secondary-400 dark:placeholder:text-secondary-500"
+                    className="w-full px-4 py-3 border border-secondary-300 dark:border-secondary-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-secondary-700 text-secondary-900 dark:text-white triplet-colors resize-none placeholder:text-secondary-400 dark:placeholder:text-secondary-500"
                     placeholder="Ceritakan tentang proyek atau kebutuhan Anda..."
                   ></textarea>
                 </div>
@@ -438,7 +431,11 @@ const Contact = () => {
                   type="submit"
                   disabled={isLoading}
                   className={`w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform 
-    ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:scale-105"} 
+    ${
+      isLoading || isSuccess
+        ? "opacity-50 cursor-not-allowed"
+        : "hover:scale-105"
+    } 
     focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
                 >
                   {isLoading ? (
@@ -463,6 +460,8 @@ const Contact = () => {
                       </svg>
                       Mengirim...
                     </div>
+                  ) : isSuccess ? (
+                    "Berhasil Mengirim"
                   ) : (
                     "Kirim Pesan"
                   )}
