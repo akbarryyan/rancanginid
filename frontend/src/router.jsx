@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { Toaster } from "react-hot-toast";
 import LandingPage from "./pages/LandingPage";
 
 const router = createBrowserRouter([
@@ -10,10 +9,5 @@ const router = createBrowserRouter([
 ]);
 
 export default function AppRouter() {
-  return (
-    <>
-      <Toaster position="top-right" />
-      <RouterProvider router={router} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }

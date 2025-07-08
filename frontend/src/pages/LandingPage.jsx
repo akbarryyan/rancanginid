@@ -19,36 +19,37 @@ import BackToTop from "../components/BackToTop";
 import FloatingSocialContact from "../components/FloatingSocialContact";
 
 function LandingPage() {
-	useEffect(() => {
-		AOS.init({
-			duration: 1000,
-			easing: "ease-in-out",
-			once: true,
-			mirror: false,
-		});
-	}, []);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false,
+    });
+  }, []);
 
-	return (
-		<div className="font-sans antialiased transition-theme bg-white text-secondary-800 dark:bg-secondary-900 dark:text-secondary-100 min-h-screen">
-			<MobileMenu />
-			<Header />{" "}
-			<main>
-				<Hero />
-				<About />
-				<Services />
-				<Process />
-				<Portfolio />
-				<Testimonials />
-				<Pricing />
-				<FAQ />
-				<Blog />
-				<Contact />
-			</main>
-			<Footer />
-			<BackToTop />
-			<FloatingSocialContact />
-		</div>
-	);
+  return (
+    <div className="font-sans antialiased transition-theme bg-white text-secondary-800 dark:bg-secondary-900 dark:text-secondary-100 min-h-screen">
+      <MobileMenu />
+      <Header />{" "}
+      <main>
+        <Hero />
+        <About />
+        <Services />
+        <Process />
+        <Portfolio />
+        <Testimonials />
+        <Pricing />
+        <FAQ />
+        <Blog />
+        <Contact />
+      </main>
+      <Footer />
+      <BackToTop />
+      <FloatingSocialContact />
+      {/* ToastContainer hanya di main.jsx */}
+    </div>
+  );
 }
 
 export default LandingPage;

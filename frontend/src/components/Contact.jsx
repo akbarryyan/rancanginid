@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,22 +20,6 @@ const Contact = () => {
       [name]: value,
     }));
   };
-
-  // const handleSubmit = (e) => {
-  // 	e.preventDefault();
-  // 	console.log(
-  // 		"Form submitted:",
-  // 		formData
-  // 	);
-  // 	setFormData({
-  // 		name: "",
-  // 		email: "",
-  // 		phone: "",
-  // 		company: "",
-  // 		service: "",
-  // 		message: "",
-  // 	});
-  // };
 
   const [services, setServices] = useState([]);
 
@@ -55,43 +41,50 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000); // 2 detik
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/contact`,
-        {
+      let res;
+      try {
+        res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company: formData.company,
-            service: Number(formData.service),
-            message: formData.message,
-          }),
-        }
-      );
-
-      const result = await response.json();
-      if (response.ok) {
-        toast.success("Pesan berhasil dikirim!");
-        console.log("Form submitted:", result);
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          company: "",
-          service: "",
-          message: "",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+          signal: controller.signal,
         });
-      } else {
-        toast.error(`Gagal mengirim pesan: ${result.error}`);
+        clearTimeout(timeout); // Batalkan timeout segera setelah fetch selesai
+      } catch (err) {
+        clearTimeout(timeout); // Batalkan timeout jika fetch error
+        if (err.name === "AbortError") {
+          throw new Error("Request timeout, server tidak merespon.");
+        }
+        throw err;
       }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error("Terjadi kesalahan. Silakan coba lagi.");
+      let result;
+      try {
+        result = await res.json();
+      } catch (err) {
+        throw new Error("Response bukan JSON valid dari server.");
+      }
+      console.log("FETCH RESPONSE:", res);
+      console.log("FETCH RESULT:", result);
+      if (!res.ok) throw new Error(result.error || "Unknown error");
+      toast.success("Pesan berhasil dikirim!");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        company: "",
+        service: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error("ERROR SUBMIT:", err);
+      toast.error(err.message || "Terjadi kesalahan.");
+    } finally {
+      setIsLoading(false);
+      console.log("FINALLY SUBMIT CONTACT");
     }
   };
 
@@ -445,9 +438,36 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+                  disabled={isLoading}
+                  className={`w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform 
+    ${isLoading ? "opacity-50 cursor-not-allowed" : "hover:scale-105"} 
+    focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2`}
                 >
-                  Kirim Pesan
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <svg
+                        className="animate-spin h-5 w-5 mr-2 text-white"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8z"
+                        ></path>
+                      </svg>
+                      Mengirim...
+                    </div>
+                  ) : (
+                    "Kirim Pesan"
+                  )}
                 </button>
               </form>
             </div>
