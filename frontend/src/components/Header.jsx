@@ -228,7 +228,7 @@ const Header = () => {
 											</a>
 										</div>
 									</div>
-								</li>
+								</li>{" "}
 								<li>
 									<a
 										href="#portfolio"
@@ -243,6 +243,22 @@ const Header = () => {
 										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
 										Portofolio
+									</a>
+								</li>
+								<li>
+									<a
+										href="#pricing"
+										onClick={(
+											e
+										) => {
+											e.preventDefault();
+											handleLinkClick(
+												"#pricing"
+											);
+										}}
+										className="text-secondary-600 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+									>
+										Harga
 									</a>
 								</li>
 								<li>
@@ -563,6 +579,22 @@ const Header = () => {
 										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 									>
 										Portofolio
+									</a>{" "}
+								</li>
+								<li>
+									<a
+										href="#pricing"
+										onClick={(
+											e
+										) => {
+											e.preventDefault();
+											handleLinkClick(
+												"#pricing"
+											);
+										}}
+										className="block py-2 text-lg font-medium text-secondary-700 dark:text-secondary-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+									>
+										Harga
 									</a>
 								</li>
 								<li>

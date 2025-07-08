@@ -172,7 +172,7 @@ const MobileMenu = () => {
 								Solutions
 							</a>
 						</div>
-					</li>
+					</li>{" "}
 					<li>
 						<a
 							href="#portfolio"
@@ -182,6 +182,17 @@ const MobileMenu = () => {
 							className="block py-2 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
 						>
 							Portofolio
+						</a>
+					</li>
+					<li>
+						<a
+							href="#pricing"
+							onClick={
+								handleLinkClick
+							}
+							className="block py-2 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+						>
+							Harga
 						</a>
 					</li>
 					<li>
