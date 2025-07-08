@@ -8,15 +8,36 @@ import serviceRoutes from "./routes/serviceRoutes.js";
 
 const app = express();
 
+// CORS configuration
+const corsOptions = {
+	origin:
+		process.env.FRONTEND_URL ||
+		"http://localhost:5173",
+	credentials: true,
+	methods: ["GET", "POST", "PUT", "DELETE"],
+	allowedHeaders: ["Content-Type", "Authorization"],
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan("dev"));
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.send("API is running...");
+	res.send("API is running...");
 });
+
+// Routes
 app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+	console.error("Unhandled error:", err);
+	res.status(500).json({
+		error: "Internal server error",
+	});
+});
 
 export default app;
