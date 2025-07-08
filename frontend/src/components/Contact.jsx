@@ -42,35 +42,30 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 2000); // 2 detik
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // timeout 10 detik
+
     try {
-      let res;
-      try {
-        res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/contact`,
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
           signal: controller.signal,
-        });
-        clearTimeout(timeout); // Batalkan timeout segera setelah fetch selesai
-      } catch (err) {
-        clearTimeout(timeout); // Batalkan timeout jika fetch error
-        if (err.name === "AbortError") {
-          throw new Error("Request timeout, server tidak merespon.");
         }
-        throw err;
+      );
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error(result.error || "Gagal kirim pesan.");
       }
-      let result;
-      try {
-        result = await res.json();
-      } catch (err) {
-        throw new Error("Response bukan JSON valid dari server.");
-      }
-      console.log("FETCH RESPONSE:", res);
-      console.log("FETCH RESULT:", result);
-      if (!res.ok) throw new Error(result.error || "Unknown error");
+
       toast.success("Pesan berhasil dikirim!");
+
       setFormData({
         name: "",
         email: "",
@@ -80,11 +75,14 @@ const Contact = () => {
         message: "",
       });
     } catch (err) {
+      if (err.name === "AbortError") {
+        toast.error("Timeout: Server tidak merespon.");
+      } else {
+        toast.error(err.message || "Terjadi kesalahan.");
+      }
       console.error("ERROR SUBMIT:", err);
-      toast.error(err.message || "Terjadi kesalahan.");
     } finally {
       setIsLoading(false);
-      console.log("FINALLY SUBMIT CONTACT");
     }
   };
 
