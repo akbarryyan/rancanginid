@@ -5,17 +5,16 @@ import dotenv from "dotenv";
 dotenv.config();
 import contactRoutes from "./routes/contactRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
+import authAdminRoutes from "./routes/authAdminRoutes.js";
 
 const app = express();
 
 // CORS configuration
 const corsOptions = {
-	origin:
-		process.env.FRONTEND_URL ||
-		"http://localhost:5173",
-	credentials: true,
-	methods: ["GET", "POST", "PUT", "DELETE"],
-	allowedHeaders: ["Content-Type", "Authorization"],
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 // Middleware
@@ -25,19 +24,20 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-	res.send("API is running...");
+  res.send("API is running...");
 });
 
 // Routes
 app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/admin", authAdminRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-	console.error("Unhandled error:", err);
-	res.status(500).json({
-		error: "Internal server error",
-	});
+  console.error("Unhandled error:", err);
+  res.status(500).json({
+    error: "Internal server error",
+  });
 });
 
 export default app;
