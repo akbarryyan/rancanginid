@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/admin/Sidebar";
 import Header from "../../components/admin/Header";
-import toast  from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -87,13 +87,8 @@ const Blog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitLoading(true);
+
     const token = localStorage.getItem("token");
-    const tagsArr = formData.tags
-      ? formData.tags
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter(Boolean)
-      : [];
     const payload = {
       title_blog: formData.title,
       description: formData.excerpt,
@@ -101,9 +96,11 @@ const Blog = () => {
       overview_image: formData.image,
       creator: "Admin",
       label_tech: formData.category,
+      status: formData.status || "draft",
     };
+
     try {
-      let res, newBlog;
+      let res;
       if (editingPost) {
         res = await fetch(`${API_URL}/api/admin/blog/${editingPost.id_blog}`, {
           method: "PUT",
@@ -114,7 +111,10 @@ const Blog = () => {
           body: JSON.stringify(payload),
         });
         if (!res.ok) throw new Error("Gagal update artikel");
+
         toast.success("Artikel berhasil diupdate");
+
+        // Update di state
         setBlogPosts((prev) =>
           prev.map((post) =>
             post.id_blog === editingPost.id_blog
@@ -131,20 +131,21 @@ const Blog = () => {
           },
           body: JSON.stringify(payload),
         });
+
         if (!res.ok) throw new Error("Gagal menambah artikel");
+
         const resData = await res.json();
+
         toast.success("Artikel berhasil ditambahkan");
-        newBlog = {
-          ...payload,
-          id_blog: resData.id_blog,
-          status: "draft",
-          views: 0,
-          created_at: new Date().toISOString(),
-        };
-        setBlogPosts((prev) => [newBlog, ...prev]);
+
+        // Push row baru lengkap dari backend
+        setBlogPosts((prev) => [resData, ...prev]);
       }
-      // Delay close modal agar toast dan loading terlihat
+
       setTimeout(() => {
+        setSearchTerm("");
+        setFilterCategory("all");
+        setFilterStatus("all");
         closeModal();
         setSubmitLoading(false);
       }, 700);
@@ -256,7 +257,7 @@ const Blog = () => {
               </div>
               <button
                 onClick={() => setShowModal(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-150 flex items-center gap-2"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-150 flex items-center gap-2 cursor-pointer"
               >
                 <svg
                   className="w-4 h-4"
@@ -432,7 +433,7 @@ const Blog = () => {
                 <select
                   value={filterCategory}
                   onChange={(e) => setFilterCategory(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white cursor-pointer"
                 >
                   <option value="all">Semua Kategori</option>
                   {categories.map((category) => (
@@ -445,7 +446,7 @@ const Blog = () => {
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white cursor-pointer"
                 >
                   <option value="all">Semua Status</option>
                   <option value="published">Published</option>

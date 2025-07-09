@@ -27,7 +27,7 @@ export const getBlogById = async (req, res) => {
   }
 };
 
-// CREATE blog
+// CREATE blog (balikkan row lengkap!)
 export const createBlog = async (req, res) => {
   try {
     const {
@@ -37,14 +37,18 @@ export const createBlog = async (req, res) => {
       overview_image,
       creator,
       label_tech,
+      status,
     } = req.body;
+
     if (!title_blog || !description || !creator) {
       return res
         .status(400)
         .json({ error: "Judul, deskripsi, dan creator wajib diisi" });
     }
+
+    // Insert dulu
     const [result] = await db.query(
-      `INSERT INTO blog (title_blog, description, content, overview_image, creator, label_tech, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())`,
+      `INSERT INTO blog (title_blog, description, content, overview_image, creator, label_tech, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
       [
         title_blog,
         description,
@@ -52,11 +56,18 @@ export const createBlog = async (req, res) => {
         overview_image || null,
         creator,
         label_tech || null,
+        status || "draft",
       ]
     );
-    res
-      .status(201)
-      .json({ message: "Blog berhasil dibuat", id_blog: result.insertId });
+
+    const insertedId = result.insertId;
+
+    // Ambil row-nya langsung
+    const [rows] = await db.query(`SELECT * FROM blog WHERE id_blog = ?`, [
+      insertedId,
+    ]);
+
+    res.status(201).json(rows[0]); // Balikin data lengkap
   } catch (err) {
     console.error("[Blog] Error createBlog:", err);
     res.status(500).json({ error: "Gagal membuat blog" });
@@ -74,9 +85,11 @@ export const updateBlog = async (req, res) => {
       overview_image,
       creator,
       label_tech,
+      status,
     } = req.body;
+
     const [result] = await db.query(
-      `UPDATE blog SET title_blog=?, description=?, content=?, overview_image=?, creator=?, label_tech=? WHERE id_blog=?`,
+      `UPDATE blog SET title_blog=?, description=?, content=?, overview_image=?, creator=?, label_tech=?, status=? WHERE id_blog=?`,
       [
         title_blog,
         description,
@@ -84,11 +97,14 @@ export const updateBlog = async (req, res) => {
         overview_image,
         creator,
         label_tech,
+        status,
         id,
       ]
     );
+
     if (result.affectedRows === 0)
       return res.status(404).json({ error: "Blog tidak ditemukan" });
+
     res.json({ message: "Blog berhasil diupdate" });
   } catch (err) {
     console.error("[Blog] Error updateBlog:", err);
@@ -101,8 +117,10 @@ export const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const [result] = await db.query("DELETE FROM blog WHERE id_blog = ?", [id]);
+
     if (result.affectedRows === 0)
       return res.status(404).json({ error: "Blog tidak ditemukan" });
+
     res.json({ message: "Blog berhasil dihapus" });
   } catch (err) {
     console.error("[Blog] Error deleteBlog:", err);
