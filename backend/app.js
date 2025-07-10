@@ -7,6 +7,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import authAdminRoutes from "./routes/authAdminRoutes.js";
 import adminBlogRoutes from "./routes/adminBlogRoutes.js";
+import adminMessagesRoutes from "./routes/adminMessagesRoutes.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/admin", authAdminRoutes);
 app.use("/api/admin/blog", adminBlogRoutes);
+app.use("/api/admin/messages", adminMessagesRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
